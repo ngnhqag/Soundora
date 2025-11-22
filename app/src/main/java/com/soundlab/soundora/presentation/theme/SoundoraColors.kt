@@ -27,7 +27,7 @@ object SoundoraColors {
     }
 
     object Stroke {
-        val Stroke1 = Color(0xFFEAEAEA)
+        val StrokePrimary = Color(0xFFFFFFFF)
     }
 
     object Border {
@@ -38,11 +38,10 @@ object SoundoraColors {
     }
 
     object Text {
-        val TextPrimary = Black
+        val TextPrimary = White
         val TextSecondary = Color(0xFF2B2B2B)
         val TextTertiary = Color(0xFF808080)
         val TextDisabled = Color(0xFF999999)
-        val Button = White
     }
 
     object Gray {
