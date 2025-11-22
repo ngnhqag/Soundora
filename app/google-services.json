@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1015453616720",
+    "project_id": "soundora-964ea",
+    "storage_bucket": "soundora-964ea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015453616720:android:bd95ddd1928b92b26c1f55",
+        "android_client_info": {
+          "package_name": "com.soundlab.soundora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015453616720-9rnedla69vh7j2nv1vd20759urlq2n74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundlab.soundora",
+            "certificate_hash": "90ce059fa4765dbaf26410d28d6a5f8cc7233556"
+          }
+        },
+        {
+          "client_id": "1015453616720-e6d1d503p51io607nn635d37eapsg51e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTfgrQ_Z_jlscVQLFLO2tZwF6eZ-xvox0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015453616720-e6d1d503p51io607nn635d37eapsg51e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.soundlab.soundora" />
+                  <option name="mobileSdkAppId" value="1:1015453616720:android:bd95ddd1928b92b26c1f55" />
+                  <option name="projectId" value="soundora-964ea" />
+                  <option name="projectNumber" value="1015453616720" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
