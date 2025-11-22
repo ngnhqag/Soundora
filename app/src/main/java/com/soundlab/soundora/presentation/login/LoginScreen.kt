@@ -1,5 +1,6 @@
 package com.soundlab.soundora.presentation.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,18 +13,22 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soundlab.soundora.R
-import com.soundlab.soundora.presentation.components.IconButton
-import com.soundlab.soundora.presentation.components.SoundoraButton
-import com.soundlab.soundora.presentation.components.SoundoraButtonVariant
+import com.soundlab.soundora.presentation.components.button.IconButton
+import com.soundlab.soundora.presentation.components.button.SoundoraButton
+import com.soundlab.soundora.presentation.components.button.SoundoraButtonVariant
+import com.soundlab.soundora.presentation.components.view.LottieView
 import com.soundlab.soundora.presentation.login.model.LoginScreenButton
 import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.presentation.theme.SoundoraShapes
@@ -34,12 +39,25 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginScreen(
     viewModel: LoginViewModel = koinViewModel()
 ) {
+    val state = viewModel.viewState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                LoginEvent.LoginError -> Log.d("LoginScreen", "Login error")
+                LoginEvent.NavigateToMain -> Log.d("LoginScreen", "Navigate to main")
+            }
+        }
+    }
+
     LoginScreenContent(
+        state = state.value,
         onSignUpClick = {
             viewModel.processIntent(LoginIntent.OnSignUpClick)
         },
         onGoogleClick = {
-            viewModel.processIntent(LoginIntent.OnGoogleClick)
+            viewModel.processIntent(LoginIntent.OnGoogleClick(context = context))
         },
         onFacebookClick = {
             viewModel.processIntent(LoginIntent.OnFacebookClick)
@@ -49,6 +67,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginScreenContent(
+    state: LoginState,
     onSignUpClick: () -> Unit,
     onGoogleClick: () -> Unit,
     onFacebookClick: () -> Unit
@@ -136,6 +155,22 @@ fun LoginScreenContent(
                 )
             }
         }
+
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = SoundoraColors.Overlay.BlackOverlay50)
+            ) {
+                LottieView(
+                    lottieResId = R.raw.anim_loading_wave,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .align(Alignment.Center),
+                    isLooping = true
+                )
+            }
+        }
     }
 }
 
@@ -143,9 +178,9 @@ fun LoginScreenContent(
 @Composable
 private fun LoginScreenContentPreview() {
     LoginScreenContent(
+        state = LoginState(),
         onSignUpClick = {},
         onGoogleClick = {},
         onFacebookClick = {}
     )
 }
-

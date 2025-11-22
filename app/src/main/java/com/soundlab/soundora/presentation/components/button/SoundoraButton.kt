@@ -1,4 +1,4 @@
-package com.soundlab.soundora.presentation.components
+package com.soundlab.soundora.presentation.components.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

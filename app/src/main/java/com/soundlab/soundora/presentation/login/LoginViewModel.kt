@@ -1,8 +1,15 @@
 package com.soundlab.soundora.presentation.login
 
+import android.app.Activity
+import android.content.Context
+import androidx.lifecycle.viewModelScope
 import com.soundlab.soundora.base.BaseMviViewModel
+import com.soundlab.soundora.data.provider.GoogleAuthenticProvider
+import kotlinx.coroutines.launch
 
-class LoginViewModel :  BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
+class LoginViewModel(
+    private val googleAuthenticProvider: GoogleAuthenticProvider
+) :  BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
     override fun initState(): LoginState {
         return LoginState()
     }
@@ -12,8 +19,8 @@ class LoginViewModel :  BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
             LoginIntent.OnFacebookClick -> {
 
             }
-            LoginIntent.OnGoogleClick -> {
-                handleGoogleClick()
+            is LoginIntent.OnGoogleClick -> {
+                handleGoogleClick(intent.context)
             }
             LoginIntent.OnSignUpClick -> {
 
@@ -21,7 +28,16 @@ class LoginViewModel :  BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
         }
     }
 
-    private fun handleGoogleClick() {
-
+    private fun handleGoogleClick(context: Context) {
+        viewModelScope.launch {
+            updateState { copy(isLoading = true) }
+            val result = googleAuthenticProvider.signIn(context as Activity)
+            if (result) {
+                sendEvent(LoginEvent.NavigateToMain)
+            } else {
+                sendEvent(LoginEvent.LoginError)
+            }
+            updateState { copy(isLoading = false) }
+        }
     }
 }

@@ -20,8 +20,8 @@ object SoundoraColors {
         val BackgroundLightBlue = Color(0xFFF2F8FF)
     }
 
-    object Surface {
-        val SurfacePrimary = Color(0xFFF6F6FA)
+    object Overlay {
+        val BlackOverlay50 = Color(0x80000000)
 
         val SurfaceNavigationButton = Color(0xB2F2F2F7)
     }
