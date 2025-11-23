@@ -7,6 +7,7 @@ import com.soundlab.soundora.presentation.library.LibraryViewModel
 import com.soundlab.soundora.presentation.login.LoginViewModel
 import com.soundlab.soundora.presentation.main.MainViewModel
 import com.soundlab.soundora.presentation.search.SearchViewModel
+import com.soundlab.soundora.presentation.splash.SplashViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,6 +18,7 @@ val viewModelModule by lazy {
         viewModel { HomeViewModel() }
         viewModel { SearchViewModel() }
         viewModel { LibraryViewModel() }
+        viewModel { SplashViewModel() }
     }
 }
 

@@ -6,11 +6,12 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.soundlab.soundora.presentation.login.LoginScreen
 import com.soundlab.soundora.presentation.main.MainScreen
+import com.soundlab.soundora.presentation.splash.SplashScreen
 import com.soundlab.soundora.util.ext.replaceLastWith
 
 @Composable
 fun NavRoutes() {
-    val backStack = rememberNavBackStack(Destination.Login)
+    val backStack = rememberNavBackStack(Destination.Splash)
 
     NavDisplay(
         backStack = backStack,
@@ -23,8 +24,20 @@ fun NavRoutes() {
                     }
                 )
             }
+            
             entry<Destination.Main> {
                 MainScreen()
+            }
+            
+            entry<Destination.Splash> {
+                SplashScreen(
+                    navigateToMain = {
+                        backStack.replaceLastWith(Destination.Main)
+                    },
+                    navigateToLogin = {
+                        backStack.replaceLastWith(Destination.Login)
+                    }
+                )
             }
         }
     )
