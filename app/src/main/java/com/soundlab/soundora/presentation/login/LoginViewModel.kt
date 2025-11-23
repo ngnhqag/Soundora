@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val googleAuthenticProvider: GoogleAuthenticProvider
-) :  BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
+) : BaseMviViewModel<LoginIntent, LoginState, LoginEvent>(){
     override fun initState(): LoginState {
         return LoginState()
     }
