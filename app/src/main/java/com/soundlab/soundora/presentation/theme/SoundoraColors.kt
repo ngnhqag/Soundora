@@ -30,6 +30,11 @@ object SoundoraColors {
         val StrokePrimary = Color(0xFFFFFFFF)
     }
 
+    object MainTab {
+        val Selected = Color(0xFFFFFFFF)
+        val UnSelected = Color(0xFF777777)
+    }
+
     object Border {
         val BorderLight = Color(0xFFE4E4E6)
         val BorderMedium = Color(0xFFD1D1D6)
@@ -39,7 +44,7 @@ object SoundoraColors {
 
     object Text {
         val TextPrimary = White
-        val TextSecondary = Color(0xFF2B2B2B)
+        val TextSecondary = Color(0xFFE5E5E5)
         val TextTertiary = Color(0xFF808080)
         val TextDisabled = Color(0xFF999999)
     }

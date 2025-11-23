@@ -7,4 +7,7 @@
     <string name="log_in">Log in</string>
     <string name="login_title">Millions of Songs.\nFree on Spotify.</string>
     <string name="web_client_id">1015453616720-e6d1d503p51io607nn635d37eapsg51e.apps.googleusercontent.com</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="your_library">Your Library</string>
 </resources>

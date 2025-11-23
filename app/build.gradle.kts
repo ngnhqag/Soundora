@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -70,4 +71,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     // Lottie
     implementation(libs.lottie.compose)
+    // Navigation3
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.kotlinx.serialization.core)
 }

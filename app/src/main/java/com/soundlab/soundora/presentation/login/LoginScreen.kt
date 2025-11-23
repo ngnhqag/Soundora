@@ -37,6 +37,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
+    navigateToMain: () -> Unit,
     viewModel: LoginViewModel = koinViewModel()
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
@@ -45,8 +46,12 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                LoginEvent.LoginError -> Log.d("LoginScreen", "Login error")
-                LoginEvent.NavigateToMain -> Log.d("LoginScreen", "Navigate to main")
+                LoginEvent.LoginError -> {
+                    Log.d("LoginScreen", "Login error")
+                }
+                LoginEvent.NavigateToMain -> {
+                    navigateToMain()
+                }
             }
         }
     }

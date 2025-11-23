@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
+import com.soundlab.soundora.navigation.NavRoutes
 import com.soundlab.soundora.presentation.login.LoginScreen
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setupTheme(window)
         setContent {
-            LoginScreen()
+            NavRoutes()
         }
     }
 }
