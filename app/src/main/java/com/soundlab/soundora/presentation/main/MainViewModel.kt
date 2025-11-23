@@ -4,7 +4,7 @@ import com.soundlab.soundora.base.BaseMviViewModel
 
 class MainViewModel(
 
-) : BaseMviViewModel<MainIntent, MainState, MainEvent>(){
+) : BaseMviViewModel<MainIntent, MainState, MainEvent>() {
     override fun initState(): MainState {
         return MainState()
     }
