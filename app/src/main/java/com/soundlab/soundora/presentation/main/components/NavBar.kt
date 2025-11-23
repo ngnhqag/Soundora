@@ -33,8 +33,6 @@ fun NavBar(
             .background(color = SoundoraColors.BackGround.BackgroundPrimary)
             .heightIn(80.dp)
             .fillMaxWidth()
-            .padding(horizontal = 48.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         MainTab.entries.forEach { mainTab ->
             val selectedColor = if (mainTab.index == tabSelected) SoundoraColors.MainTab.Selected else SoundoraColors.MainTab.UnSelected
@@ -42,7 +40,8 @@ fun NavBar(
                 modifier = Modifier
                     .clickable{
                         onTabClick(mainTab.index)
-                    },
+                    }
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
