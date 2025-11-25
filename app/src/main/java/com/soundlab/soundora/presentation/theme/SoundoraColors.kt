@@ -118,6 +118,7 @@ object SoundoraColors {
     }
 
     object Neutral {
-        val Neutral00 = Color(0xFF1A1A1A)
+        val Neutral00 = Color(0xFFBABABA)
+        val Neutral01 = Color(0xFFB3B3B3)
     }
 }

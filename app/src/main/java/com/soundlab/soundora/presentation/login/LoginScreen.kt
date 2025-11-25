@@ -1,6 +1,7 @@
 package com.soundlab.soundora.presentation.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soundlab.soundora.R
-import com.soundlab.soundora.presentation.components.button.IconButton
+import com.soundlab.soundora.presentation.components.button.SoundoraIconButton
 import com.soundlab.soundora.presentation.components.button.SoundoraButton
 import com.soundlab.soundora.presentation.components.button.SoundoraButtonVariant
 import com.soundlab.soundora.presentation.components.view.LottieView
@@ -48,6 +49,8 @@ fun LoginScreen(
             when (event) {
                 LoginEvent.LoginError -> {
                     Log.d("LoginScreen", "Login error")
+                    Toast.makeText(context,
+                        context.getString(R.string.login_error), Toast.LENGTH_SHORT).show()
                 }
                 LoginEvent.NavigateToMain -> {
                     navigateToMain()
@@ -141,7 +144,7 @@ fun LoginScreenContent(
                         strokeColor = SoundoraColors.Stroke.StrokePrimary,
                         backgroundColor = Color.Transparent
                     ),
-                    leadingIcon = IconButton(
+                    leadingIcon = SoundoraIconButton(
                         iconRes = loginScreenButton.iconRes,
                         iconSize = 16.dp,
                         iconTint = Color.Unspecified

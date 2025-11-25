@@ -10,6 +10,14 @@ class HomeViewModel(
     }
 
     override fun processIntent(intent: HomeIntent) {
+        when (intent) {
+            is HomeIntent.OnSettingClick -> {
+                handleOnSettingClick()
+            }
+        }
+    }
 
+    private fun handleOnSettingClick() {
+        sendEvent(HomeEvent.NavigateToSetting)
     }
 }

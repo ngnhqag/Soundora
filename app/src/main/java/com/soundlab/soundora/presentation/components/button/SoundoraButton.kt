@@ -34,8 +34,8 @@ fun SoundoraButton(
     modifier: Modifier = Modifier,
     isContentCenter: Boolean = true,
     variant: SoundoraButtonVariant = SoundoraButtonVariant.Filled(SoundoraColors.Primary.Primary),
-    leadingIcon: IconButton? = null,
-    trailingIcon: IconButton? = null,
+    leadingIcon: SoundoraIconButton? = null,
+    trailingIcon: SoundoraIconButton? = null,
     shape: Shape = SoundoraShapes.extraLarge,
     strokeWidth: Dp = 2.dp,
     isFillMaxWidth: Boolean = true
@@ -116,7 +116,7 @@ fun SoundoraButton(
     }
 }
 
-data class IconButton(
+data class SoundoraIconButton(
     val iconRes: Int,
     val iconSize: Dp,
     val iconTint: Color,
@@ -140,12 +140,12 @@ private fun SoundoraButtonPreview() {
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
         isFillMaxWidth = false,
-        leadingIcon = IconButton(
+        leadingIcon = SoundoraIconButton(
             iconRes = R.drawable.ic_logo_white,
             iconSize = 24.dp,
             iconTint = SoundoraColors.White
         ),
-        trailingIcon = IconButton(
+        trailingIcon = SoundoraIconButton(
             iconRes = R.drawable.ic_logo,
             iconSize = 24.dp,
             iconTint = Color.White
