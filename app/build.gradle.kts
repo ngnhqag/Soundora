@@ -69,10 +69,17 @@ dependencies {
     implementation (libs.koin.androidx.compose)
     // Firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore.ktx)
     // Lottie
     implementation(libs.lottie.compose)
     // Navigation3
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.kotlinx.serialization.core)
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+    // Json
+    implementation(libs.kotlinx.serialization.json)
+    // Coil
+    implementation(libs.coil.compose)
 }

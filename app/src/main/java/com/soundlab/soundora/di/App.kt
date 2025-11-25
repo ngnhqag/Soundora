@@ -11,7 +11,11 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 viewModelModule,
-                authModule
+                firebaseModule,
+                localDataModule,
+                remoteDataModule,
+                repositoryModule,
+                useCaseModule
             )
         }
     }

@@ -14,6 +14,9 @@ class MainViewModel(
             is MainIntent.OnTabClick -> {
                 handleOnTabClick(intent.index)
             }
+            is MainIntent.NavigateToSetting -> {
+                sendEvent(MainEvent.NavigateToSetting)
+            }
         }
     }
 

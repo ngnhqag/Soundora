@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,22 +20,50 @@ import com.soundlab.soundora.presentation.search.SearchScreen
 import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.util.Constant
 import org.koin.androidx.compose.koinViewModel
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = koinViewModel()
+    navigateToSetting: () -> Unit,
+    viewModel: MainViewModel = koinViewModel(),
+    tabRequestFlow: StateFlow<Int?>? = null,
+    onTabRequestConsumed: () -> Unit = {}
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(tabRequestFlow) {
+        tabRequestFlow?.collect { requestedTab ->
+            if (requestedTab != null) {
+                viewModel.processIntent(MainIntent.OnTabClick(requestedTab))
+                onTabRequestConsumed()
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                MainEvent.NavigateToSetting -> {
+                    navigateToSetting()
+                }
+            }
+        }
+    }
+
     MainScreenContent(
         state = state.value,
         onTabClick = { index ->
             viewModel.processIntent(MainIntent.OnTabClick(index))
+        },
+        navigateToSetting = {
+            viewModel.processIntent(MainIntent.NavigateToSetting)
         }
     )
 }
 @Composable
 fun MainScreenContent(
     state: MainState,
+    navigateToSetting: () -> Unit,
     onTabClick: (Int) -> Unit
 ) {
     Column(
@@ -44,6 +73,9 @@ fun MainScreenContent(
             .padding(top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding())
     ) {
         MainContent(
+            navigateToSetting = {
+                navigateToSetting()
+            },
             tabSelected = state.tabSelected,
             modifier = Modifier
                 .weight(1f)
@@ -61,6 +93,7 @@ fun MainScreenContent(
 
 @Composable
 fun MainContent(
+    navigateToSetting: () -> Unit,
     modifier: Modifier = Modifier,
     tabSelected: Int = 0
 ) {
@@ -68,7 +101,11 @@ fun MainContent(
         modifier = modifier
     ) {
         when (tabSelected) {
-            Constant.MainTabIndex.HOME -> HomeScreen()
+            Constant.MainTabIndex.HOME -> HomeScreen(
+                navigateToSetting = {
+                    navigateToSetting()
+                },
+            )
             Constant.MainTabIndex.SEARCH -> SearchScreen()
             Constant.MainTabIndex.LIBRARY -> LibraryScreen()
         }
@@ -79,6 +116,9 @@ fun MainContent(
 private fun MainScreenPreview() {
     MainScreenContent(
         state = MainState(),
-        onTabClick = {}
+        onTabClick = {},
+        navigateToSetting = {
+
+        }
     )
 }

@@ -5,6 +5,7 @@ import com.soundlab.soundora.base.MviSingleEvent
 import com.soundlab.soundora.base.MviViewState
 
 sealed class MainIntent : MviIntent {
+    data object NavigateToSetting : MainIntent()
     data class OnTabClick(val index: Int) : MainIntent()
 }
 
@@ -13,5 +14,5 @@ data class MainState(
 ) : MviViewState
 
 sealed class MainEvent : MviSingleEvent {
-
+    data object NavigateToSetting : MainEvent()
 }
