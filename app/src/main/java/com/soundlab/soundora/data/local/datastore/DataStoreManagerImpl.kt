@@ -20,8 +20,8 @@ class DataStoreManagerImpl(
             dataStore.edit { preferences ->
                 preferences[DataStoreKey.USER_INFO] = userString
             }
-        } catch (exception: Exception) {
-            Log.e("DataStoreManager", "Error saving user to preferences")
+        } catch (e: Exception) {
+            Log.e("DataStoreManager", "Error saving user to preferences ${e.message}")
         }
     }
 
@@ -37,6 +37,23 @@ class DataStoreManagerImpl(
                         null
                     }
                 }
+            }
+    }
+
+    override suspend fun saveLanguageCode(languageCode: String) {
+        try {
+            dataStore.edit { preferences ->
+                preferences[DataStoreKey.LANGUAGE_CODE] = languageCode
+            }
+        } catch (e: Exception) {
+            Log.e("DataStoreManager", "Error saving language code: ${e.message}")
+        }
+    }
+
+    override fun getLanguageCode(): Flow<String?> {
+        return dataStore.data
+            .map { preferences ->
+                preferences[DataStoreKey.LANGUAGE_CODE]
             }
     }
 }

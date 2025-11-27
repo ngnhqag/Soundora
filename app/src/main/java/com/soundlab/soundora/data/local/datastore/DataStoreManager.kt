@@ -6,4 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface DataStoreManager {
     suspend fun saveUserInfo(user: User)
     fun getUserInfo(): Flow<User?>
+
+    suspend fun saveLanguageCode(languageCode : String)
+    fun getLanguageCode(): Flow<String?>
 }
