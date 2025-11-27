@@ -7,17 +7,23 @@ import com.soundlab.soundora.domain.model.User
 import com.soundlab.soundora.presentation.setting.model.SettingOption
 
 sealed class SettingIntent : MviIntent {
-    data object OnBackClick: SettingIntent()
-    data object OnProfileClick: SettingIntent()
-    data class OnOptionClick(val settingOption: SettingOption): SettingIntent()
+    data object OnBackClick : SettingIntent()
+    data object OnProfileClick : SettingIntent()
+    data class OnOptionClick(val settingOption: SettingOption) : SettingIntent()
+    data class OnLanguageBottomSheetStateChange(val isVisible: Boolean) : SettingIntent()
+    data class OnSaveLanguage(val languageCode: String) : SettingIntent()
 }
 
 data class SettingState(
     val isLoading: Boolean = false,
-    val user: User? = null
+    val user: User? = null,
+    val isShowLanguageBottomSheet: Boolean = false,
+    val languageCodeSelected: String = "en"
 ) : MviViewState
 
 sealed class SettingEvent : MviSingleEvent {
-    data object NavigateToHome: SettingEvent()
-    data object NavigateToLibrary: SettingEvent()
+    data object NavigateToHome : SettingEvent()
+    data object NavigateToLibrary : SettingEvent()
+    data class ChangeLanguage(val languageCode: String) : SettingEvent()
+
 }

@@ -13,7 +13,7 @@ object SoundoraColors {
 
     object BackGround {
         val BackgroundPrimary = Color(0xFF121212)
-        val BackgroundSecondary = Color(0xFFFAFAFA)
+        val BackgroundSecondary = Color(0xFF363636)
         val BackgroundOnboardingDots = Color(0xFFF5F5F5)
         val BackgroundTertiary = Color(0x70F2F2F7)
         val BackgroundTrashBottom = Color(0xFFD9EBFF)

@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun NavRoutes() {
     val backStack = rememberNavBackStack(Destination.Splash)
-    val mainTabRequest = remember { MutableStateFlow<Int?>(null) }
 
     NavDisplay(
         backStack = backStack,
@@ -34,10 +33,6 @@ fun NavRoutes() {
                 MainScreen(
                     navigateToSetting = {
                         backStack.add(Destination.Setting)
-                    },
-                    tabRequestFlow = mainTabRequest,
-                    onTabRequestConsumed = {
-                        mainTabRequest.value = null
                     }
                 )
             }
@@ -58,10 +53,6 @@ fun NavRoutes() {
                     navigateToHome = {
                         backStack.removeLastOrNull()
                     },
-                    navigateToLibrary = {
-                        mainTabRequest.value = Constant.MainTabIndex.LIBRARY
-                        backStack.removeLastOrNull()
-                    }
                 )
             }
         }

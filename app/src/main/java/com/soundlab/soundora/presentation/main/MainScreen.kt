@@ -18,33 +18,33 @@ import com.soundlab.soundora.presentation.library.LibraryScreen
 import com.soundlab.soundora.presentation.main.components.NavBar
 import com.soundlab.soundora.presentation.search.SearchScreen
 import com.soundlab.soundora.presentation.theme.SoundoraColors
+import com.soundlab.soundora.util.AppEventManager
 import com.soundlab.soundora.util.Constant
+import com.soundlab.soundora.util.AppEvent
 import org.koin.androidx.compose.koinViewModel
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MainScreen(
     navigateToSetting: () -> Unit,
     viewModel: MainViewModel = koinViewModel(),
-    tabRequestFlow: StateFlow<Int?>? = null,
-    onTabRequestConsumed: () -> Unit = {}
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(tabRequestFlow) {
-        tabRequestFlow?.collect { requestedTab ->
-            if (requestedTab != null) {
-                viewModel.processIntent(MainIntent.OnTabClick(requestedTab))
-                onTabRequestConsumed()
-            }
-        }
-    }
 
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
                 MainEvent.NavigateToSetting -> {
                     navigateToSetting()
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        AppEventManager.events.collect { event ->
+            when (event) {
+                is AppEvent.NavigateToLibrary -> {
+                    viewModel.processIntent(MainIntent.OnTabClick(event.tabSelected))
                 }
             }
         }
