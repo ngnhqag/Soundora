@@ -32,9 +32,9 @@ val viewModelModule by lazy {
         viewModel { MainViewModel() }
         viewModel { HomeViewModel() }
         viewModel { SearchViewModel() }
-        viewModel { LibraryViewModel() }
+        viewModel { LibraryViewModel(get()) }
         viewModel { SplashViewModel() }
-        viewModel { SettingViewModel(get()) }
+        viewModel { SettingViewModel(get(), get()) }
     }
 }
 

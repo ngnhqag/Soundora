@@ -22,4 +22,8 @@
     <string name="english">Tiếng Anh</string>
     <string name="vietnamese">Tiếng Việt</string>
     <string name="save">Lưu</string>
+    <string name="edit_profile">Sửa hồ sơ</string>
+    <string name="playlists">Danh sách phát</string>
+    <string name="followers">Người theo dõi</string>
+    <string name="followings">Đang theo dõi</string>
 </resources>

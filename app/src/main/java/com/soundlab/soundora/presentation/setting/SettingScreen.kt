@@ -1,6 +1,5 @@
     package com.soundlab.soundora.presentation.setting
 
-    import android.app.Activity
     import android.util.Log
     import androidx.compose.animation.AnimatedVisibility
     import androidx.compose.foundation.background
@@ -43,7 +42,6 @@
     import com.soundlab.soundora.util.AppEvent.NavigateToLibrary
     import com.soundlab.soundora.util.AppEventManager
     import com.soundlab.soundora.util.Constant
-    import com.soundlab.soundora.util.LanguageHelper
     import org.koin.compose.viewmodel.koinViewModel
 
     @Composable
@@ -70,9 +68,6 @@
                     }
 
                     is SettingEvent.ChangeLanguage -> {
-                        LanguageHelper.changeLanguage(context, event.languageCode)
-                        if (context is Activity) context.recreate()
-                        Log.d("SettingScreen", "changeLanguage: ${event.languageCode}")
                     }
                 }
             }

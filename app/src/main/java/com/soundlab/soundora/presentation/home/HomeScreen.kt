@@ -1,7 +1,5 @@
 package com.soundlab.soundora.presentation.home
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,8 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.soundlab.soundora.R
-import com.soundlab.soundora.presentation.components.button.SoundoraIconButton
-import com.soundlab.soundora.presentation.login.LoginEvent
 import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.presentation.theme.SoundoraTypography
 import org.koin.compose.viewmodel.koinViewModel
