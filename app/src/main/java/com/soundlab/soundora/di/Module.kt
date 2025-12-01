@@ -11,10 +11,17 @@ import com.soundlab.soundora.data.local.datastore.DataStoreManager
 import com.soundlab.soundora.data.local.datastore.DataStoreManagerImpl
 import com.soundlab.soundora.data.provider.GoogleAuthenticProvider
 import com.soundlab.soundora.data.provider.GoogleAuthenticProviderImpl
+import com.soundlab.soundora.data.remote.api.DeezerApiClient
+import com.soundlab.soundora.data.remote.api.DeezerApiService
+import com.soundlab.soundora.data.remote.datasource.DeezerDataSource
+import com.soundlab.soundora.data.remote.datasource.DeezerDataSourceImpl
 import com.soundlab.soundora.data.remote.datasource.UserRemoteDataSource
 import com.soundlab.soundora.data.remote.datasource.UserRemoteDataSourceImpl
+import com.soundlab.soundora.data.repository.DeezerRepositoryImpl
 import com.soundlab.soundora.data.repository.UserRepositoryImpl
+import com.soundlab.soundora.domain.repository.DeezerRepository
 import com.soundlab.soundora.domain.repository.UserRepository
+import com.soundlab.soundora.domain.usecase.FetchTopAlbumUseCase
 import com.soundlab.soundora.domain.usecase.SaveUserToFirestoreUseCase
 import com.soundlab.soundora.presentation.home.HomeViewModel
 import com.soundlab.soundora.presentation.library.LibraryViewModel
@@ -30,11 +37,11 @@ val viewModelModule by lazy {
     module {
         viewModel { LoginViewModel(get(), get(), get()) }
         viewModel { MainViewModel() }
-        viewModel { HomeViewModel() }
+        viewModel { HomeViewModel(get()) }
         viewModel { SearchViewModel() }
-        viewModel { LibraryViewModel() }
+        viewModel { LibraryViewModel(get()) }
         viewModel { SplashViewModel() }
-        viewModel { SettingViewModel(get()) }
+        viewModel { SettingViewModel(get(), get()) }
     }
 }
 
@@ -69,17 +76,27 @@ val localDataModule by lazy {
 val remoteDataModule by lazy {
     module {
         single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get()) }
+        single<DeezerDataSource> { DeezerDataSourceImpl(get()) }
     }
 }
 
 val repositoryModule by lazy {
     module {
         single<UserRepository> { UserRepositoryImpl(get()) }
+        single<DeezerRepository> { DeezerRepositoryImpl(get()) }
     }
 }
 
 val useCaseModule by lazy {
     module {
         factory { SaveUserToFirestoreUseCase(get()) }
+        factory { FetchTopAlbumUseCase(get()) }
     }
+}
+
+val deezerModule = module {
+
+    // Api Service
+    single<DeezerApiService> { DeezerApiClient.build() }
+    
 }

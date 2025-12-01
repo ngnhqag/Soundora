@@ -22,4 +22,9 @@
     <string name="english">English</string>
     <string name="vietnamese">Vietnamese</string>
     <string name="save">Save</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="playlists">Playlists</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
+    <string name="see_all_playlists">See all playlists</string>
 </resources>

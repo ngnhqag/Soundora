@@ -1,15 +1,23 @@
 package com.soundlab.soundora.presentation.setting
 
+import android.app.Activity
+import android.app.Application
+import android.app.LocaleManager
+import android.content.Intent
+import android.os.Build
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewModelScope
 import com.soundlab.soundora.base.BaseMviViewModel
 import com.soundlab.soundora.data.local.datastore.DataStoreManager
 import com.soundlab.soundora.presentation.setting.model.SettingOption
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import com.soundlab.soundora.util.LanguageHelper
 
 class SettingViewModel(
-    val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    private val context: Application
 ) : BaseMviViewModel<SettingIntent, SettingState, SettingEvent>() {
 
     init {
@@ -66,10 +74,20 @@ class SettingViewModel(
     }
 
     private fun handleOnSaveLanguage(languageCode: String) {
-        viewModelScope.launch {
-            dataStoreManager.saveLanguageCode(languageCode)
-            sendEvent(SettingEvent.ChangeLanguage(languageCode))
-            updateState { copy(languageCodeSelected = languageCode) }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(languageCode)
+        } else {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
+        }
+
+        val intent = context.packageManager
+            .getLaunchIntentForPackage(context.packageName)
+            ?.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        context.startActivity(intent)
+        if (context is Activity) {
+            context.finish()
         }
     }
 

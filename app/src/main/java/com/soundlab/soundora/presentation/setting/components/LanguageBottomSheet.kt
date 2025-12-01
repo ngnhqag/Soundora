@@ -138,7 +138,7 @@ private fun LanguageBottomSheetPreview() {
     LanguageBottomSheetContent(
         isSelectedLanguageChange = true,
         modifier = Modifier.height(200.dp),
-        languageSelected = "en",
+        languageSelected = "vi",
         onLanguageCodeSelectChange = {},
         onSaveLanguage = {}
     )

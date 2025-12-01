@@ -10,31 +10,18 @@ import androidx.core.os.LocaleListCompat
 
 object LanguageHelper {
     fun changeLanguage(context: Context, languageCode: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.getSystemService(LocaleManager::class.java)
-                .applicationLocales = LocaleList.forLanguageTags(languageCode)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(languageCode)
         } else {
-            AppCompatDelegate.setApplicationLocales(
-                LocaleListCompat.forLanguageTags(languageCode)
-            )
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
         }
-        Log.d("LanguageHelper", "changeLanguage: $languageCode")
     }
 
     fun getLanguageCode(context: Context): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.getSystemService(LocaleManager::class.java)
-                .applicationLocales[0]
-                ?.toLanguageTag()
-                ?.split("-")
-                ?.first()
-                ?: "en"
+        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java).applicationLocales[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
         } else {
-            AppCompatDelegate.getApplicationLocales()[0]
-                ?.toLanguageTag()
-                ?.split("-")
-                ?.first()
-                ?: "en"
+            AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
         }
     }
 }
