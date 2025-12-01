@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    id("com.google.devtools.ksp") version "2.2.0-2.0.2"
 }
 
 android {
@@ -82,4 +83,12 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     // Coil
     implementation(libs.coil.compose)
+    implementation(libs.coil3.coil.network.okhttp)
+    // Retrofit, Gson
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    // Room
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    ksp (libs.androidx.room.compiler)
 }

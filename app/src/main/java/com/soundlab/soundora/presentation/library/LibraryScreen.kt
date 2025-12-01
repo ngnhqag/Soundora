@@ -1,23 +1,30 @@
 package com.soundlab.soundora.presentation.library
 
-import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,7 +50,7 @@ fun LibraryScreen(
     viewModel: LibraryViewModel = koinViewModel()
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
-
+    Log.d("Library Screen", "${state.value.playlistView}")
     LibraryScreenContent(
         state = state.value,
     )
@@ -72,19 +79,18 @@ fun LibraryScreenContent(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(state.user?.displayUrl)
-                    .crossfade(true)
-                    .placeholder(R.drawable.img_avatar)
-                    .error(R.drawable.img_avatar)
-                    .fallback(R.drawable.img_avatar)
-                    .size(150)
-                    .build(),
+                    .data("https://lh3.googleusercontent.com/a/ACg8ocIx_ka_Polh0R2wv9hCchZKIBUnuXituzqFtbQQVQhxoyI1hQ=s96-c")
+                    .size(150).build()
+                ,
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(122.dp)
                     .clip(CircleShape)
                     .align(Alignment.CenterHorizontally)
             )
+
+            Log.d("Library Screen", "${state.user?.displayUrl}")
 
             SoundoraButton(
                 text = stringResource(R.string.edit_profile),
@@ -115,8 +121,7 @@ fun LibraryScreenContent(
                         text = state.playlistCount.toString(),
                         color = SoundoraColors.Text.TextPrimary,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp),
+                        modifier = Modifier.padding(bottom = 8.dp),
 
                         )
 
@@ -124,21 +129,18 @@ fun LibraryScreenContent(
                         text = stringResource(R.string.playlists).uppercase(),
                         color = SoundoraColors.Neutral.Neutral01,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
 
                 Column(
-                    modifier = Modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = state.followerCount.toString(),
                         color = SoundoraColors.Text.TextPrimary,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp),
+                        modifier = Modifier.padding(bottom = 8.dp),
 
                         )
 
@@ -146,21 +148,18 @@ fun LibraryScreenContent(
                         text = stringResource(R.string.followers).uppercase(),
                         color = SoundoraColors.Neutral.Neutral01,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
 
                 Column(
-                    modifier = Modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = state.followingCount.toString(),
                         color = SoundoraColors.Text.TextPrimary,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp),
+                        modifier = Modifier.padding(bottom = 8.dp),
 
                         )
 
@@ -168,8 +167,7 @@ fun LibraryScreenContent(
                         text = stringResource(R.string.followings).uppercase(),
                         color = SoundoraColors.Neutral.Neutral01,
                         style = SoundoraTypography.Body.Small.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
             }
@@ -178,35 +176,64 @@ fun LibraryScreenContent(
                 text = stringResource(R.string.playlists),
                 color = SoundoraColors.Text.TextPrimary,
                 style = SoundoraTypography.Title2.Bold,
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 32.dp)
+                modifier = Modifier.padding(start = 16.dp, top = 32.dp)
             )
 
-            state.playLists.forEach { playlist ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(playlist.thumbnail.toUri())
-                            .crossfade(true)
-                            .placeholder(R.drawable.img_playlist_thumbnail)
-                            .error(R.drawable.img_playlist_thumbnail)
-                            .fallback(R.drawable.img_playlist_thumbnail)
-                            .build(),
-                        contentDescription = null,
+            LazyColumn(
+                modifier = Modifier
+            ) {
+                items(state.playlistView) { playlistView ->
+                    Row(
                         modifier = Modifier
-                            .size(52.dp)
-                            .clip(SoundoraShapes.extraLarge)
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(playlistView.thumbnail.toUri()).crossfade(true)
+                                .placeholder(R.drawable.img_playlist_thumbnail)
+                                .error(R.drawable.img_playlist_thumbnail)
+                                .fallback(R.drawable.img_playlist_thumbnail).build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(52.dp)
+                                .clip(SoundoraShapes.extraLarge)
+                        )
 
-                    Column(
-                        modifier = Modifier
+                        Text(
+                            text = playlistView.name,
+                            color = SoundoraColors.Text.TextPrimary,
+                            style = SoundoraTypography.Title.Medium.SemiBold,
+                            modifier = Modifier
+                                .padding(start = 20.dp, bottom = 8.dp)
+                        )
 
-                    ) {  }
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        IconButton(
+                            onClick = {}
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_navigation),
+                                contentDescription = null,
+                                tint = SoundoraColors.Neutral.Neutral00,
+                                modifier = Modifier
+                                    .padding(bottom = 8.dp)
+                                    .size(16.dp)
+                            )
+                        }
+                    }
                 }
             }
+
+            Text(
+                text = stringResource(R.string.see_all_playlists),
+                style = SoundoraTypography.Title.Medium.SemiBold,
+                color = SoundoraColors.Text.TextPrimary,
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 20.dp)
+            )
         }
     }
 }

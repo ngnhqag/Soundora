@@ -117,8 +117,6 @@ private fun MainScreenPreview() {
     MainScreenContent(
         state = MainState(),
         onTabClick = {},
-        navigateToSetting = {
-
-        }
+        navigateToSetting = {}
     )
 }

@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 fun setupTheme(window: Window) {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -42,3 +41,4 @@ fun setupTheme(window: Window) {
             window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
     }
 }
+

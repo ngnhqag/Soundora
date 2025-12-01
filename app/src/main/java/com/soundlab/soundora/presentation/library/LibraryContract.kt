@@ -16,7 +16,7 @@ data class LibraryState(
     val playlistCount: Int = 23,
     val followerCount: Int = 58,
     val followingCount: Int = 43,
-    val playLists: List<PlaylistView> = emptyList()
+    val playlistView: List<PlaylistView> = (emptyList())
 ) : MviViewState
 
 sealed class LibraryEvent : MviSingleEvent {
