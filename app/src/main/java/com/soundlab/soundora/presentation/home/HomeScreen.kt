@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.soundlab.soundora.R
+import com.soundlab.soundora.domain.model.TopAlbum
 import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.presentation.theme.SoundoraTypography
 import org.koin.compose.viewmodel.koinViewModel
@@ -32,6 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeScreen(
     navigateToSetting: () -> Unit,
+    navigateToAlbumView: (TopAlbum) -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
@@ -40,8 +42,11 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                HomeEvent.NavigateToSetting -> {
+                is HomeEvent.NavigateToSetting -> {
                     navigateToSetting()
+                }
+                is HomeEvent.NavigateToAlbumView -> {
+                   navigateToAlbumView(event.topAlbum)
                 }
             }
         }
@@ -52,8 +57,8 @@ fun HomeScreen(
         onSettingClick = {
             viewModel.processIntent(HomeIntent.OnSettingClick)
         },
-        onAlbumClick = {
-            viewModel.processIntent(HomeIntent.OnAlbumClick)
+        onAlbumClick = { topAlbum ->
+            viewModel.processIntent(HomeIntent.OnAlbumClick(topAlbum))
         }
     )
 }
@@ -62,7 +67,7 @@ fun HomeScreen(
 fun HomeScreenContent(
     state: HomeState,
     onSettingClick: () -> Unit,
-    onAlbumClick: () -> Unit
+    onAlbumClick: (TopAlbum) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -113,7 +118,7 @@ fun HomeScreenContent(
 
                    IconButton(
                        onClick = {
-                           onAlbumClick()
+                           onAlbumClick(topAlbum)
                        },
                        modifier = Modifier.size(104.dp)
                    ) {

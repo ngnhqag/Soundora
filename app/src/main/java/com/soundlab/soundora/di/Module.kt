@@ -23,6 +23,7 @@ import com.soundlab.soundora.domain.repository.DeezerRepository
 import com.soundlab.soundora.domain.repository.UserRepository
 import com.soundlab.soundora.domain.usecase.FetchTopAlbumUseCase
 import com.soundlab.soundora.domain.usecase.SaveUserToFirestoreUseCase
+import com.soundlab.soundora.presentation.albumview.AlbumViewViewModel
 import com.soundlab.soundora.presentation.home.HomeViewModel
 import com.soundlab.soundora.presentation.library.LibraryViewModel
 import com.soundlab.soundora.presentation.login.LoginViewModel
@@ -42,6 +43,7 @@ val viewModelModule by lazy {
         viewModel { LibraryViewModel(get()) }
         viewModel { SplashViewModel() }
         viewModel { SettingViewModel(get(), get()) }
+        viewModel { AlbumViewViewModel(get()) }
     }
 }
 

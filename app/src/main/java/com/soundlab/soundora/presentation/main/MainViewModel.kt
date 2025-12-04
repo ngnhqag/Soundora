@@ -17,6 +17,10 @@ class MainViewModel(
             is MainIntent.NavigateToSetting -> {
                 sendEvent(MainEvent.NavigateToSetting)
             }
+
+            is MainIntent.NavigateToAlbumView -> {
+                sendEvent(MainEvent.NavigateToAlbumView(intent.topAlbum))
+            }
         }
     }
 

@@ -1,5 +1,8 @@
 package com.soundlab.soundora.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TopAlbum(
     val id: Long,
     val title: String,

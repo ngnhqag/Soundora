@@ -1,4 +1,4 @@
-package com.soundlab.soundora.presentation.home
+package com.soundlab.soundora.presentation.albumview
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import com.soundlab.soundora.base.BaseMviViewModel
 import com.soundlab.soundora.domain.usecase.FetchTopAlbumUseCase
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class AlbumViewViewModel(
     private val fetchTopAlbumUseCase: FetchTopAlbumUseCase
-) : BaseMviViewModel<HomeIntent, HomeState, HomeEvent>() {
+): BaseMviViewModel<AlbumViewIntent, AlbumViewState, AlbumViewEvent>() {
 
     init {
         getAlbumFromDeezer()
@@ -26,23 +26,16 @@ class HomeViewModel(
         }
     }
 
-    override fun initState(): HomeState {
-        return HomeState()
+    override fun initState(): AlbumViewState {
+      return AlbumViewState()
     }
 
-    override fun processIntent(intent: HomeIntent) {
-        when (intent) {
-            is HomeIntent.OnSettingClick -> {
-                handleOnSettingClick()
-            }
-
-            is HomeIntent.OnAlbumClick -> {
-                sendEvent(HomeEvent.NavigateToAlbumView(intent.topAlbum))
+    override fun processIntent(intent: AlbumViewIntent) {
+        when(intent) {
+            AlbumViewIntent.OnBackClick -> {
+                sendEvent(AlbumViewEvent.NavigationToMain)
             }
         }
     }
 
-    private fun handleOnSettingClick() {
-        sendEvent(HomeEvent.NavigateToSetting)
-    }
 }

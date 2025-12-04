@@ -7,7 +7,7 @@ import com.soundlab.soundora.domain.model.TopAlbum
 
 sealed class HomeIntent : MviIntent {
     data object OnSettingClick : HomeIntent()
-    data object OnAlbumClick : HomeIntent()
+    data class OnAlbumClick(val topAlbum: TopAlbum) : HomeIntent()
 }
 
 data class HomeState(
@@ -17,4 +17,5 @@ data class HomeState(
 
 sealed class HomeEvent : MviSingleEvent {
     data object NavigateToSetting : HomeEvent()
+    data class NavigateToAlbumView(val topAlbum: TopAlbum) : HomeEvent()
 }

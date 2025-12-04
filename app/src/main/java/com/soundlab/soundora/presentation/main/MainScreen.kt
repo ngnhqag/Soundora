@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.soundlab.soundora.domain.model.TopAlbum
 import com.soundlab.soundora.presentation.home.HomeScreen
 import com.soundlab.soundora.presentation.library.LibraryScreen
 import com.soundlab.soundora.presentation.main.components.NavBar
@@ -26,6 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreen(
     navigateToSetting: () -> Unit,
+    navigateToAlbumView: (TopAlbum) -> Unit,
     viewModel: MainViewModel = koinViewModel(),
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
@@ -33,8 +35,12 @@ fun MainScreen(
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
             when (event) {
-                MainEvent.NavigateToSetting -> {
+                is MainEvent.NavigateToSetting -> {
                     navigateToSetting()
+                }
+
+                is MainEvent.NavigateToAlbumView -> {
+                    navigateToAlbumView(event.topAlbum)
                 }
             }
         }
@@ -57,6 +63,9 @@ fun MainScreen(
         },
         navigateToSetting = {
             viewModel.processIntent(MainIntent.NavigateToSetting)
+        },
+        navigateToAlbumView = { topAlbum ->
+            viewModel.processIntent(MainIntent.NavigateToAlbumView(topAlbum = topAlbum))
         }
     )
 }
@@ -64,6 +73,7 @@ fun MainScreen(
 fun MainScreenContent(
     state: MainState,
     navigateToSetting: () -> Unit,
+    navigateToAlbumView: (TopAlbum) -> Unit,
     onTabClick: (Int) -> Unit
 ) {
     Column(
@@ -75,6 +85,9 @@ fun MainScreenContent(
         MainContent(
             navigateToSetting = {
                 navigateToSetting()
+            },
+            navigateToAlbumView = { topAlbum ->
+                navigateToAlbumView(topAlbum)
             },
             tabSelected = state.tabSelected,
             modifier = Modifier
@@ -94,6 +107,7 @@ fun MainScreenContent(
 @Composable
 fun MainContent(
     navigateToSetting: () -> Unit,
+    navigateToAlbumView: (TopAlbum) -> Unit,
     modifier: Modifier = Modifier,
     tabSelected: Int = 0
 ) {
@@ -105,6 +119,9 @@ fun MainContent(
                 navigateToSetting = {
                     navigateToSetting()
                 },
+                navigateToAlbumView = { topAlbum ->
+                    navigateToAlbumView(topAlbum)
+                }
             )
             Constant.MainTabIndex.SEARCH -> SearchScreen()
             Constant.MainTabIndex.LIBRARY -> LibraryScreen()
@@ -117,6 +134,7 @@ private fun MainScreenPreview() {
     MainScreenContent(
         state = MainState(),
         onTabClick = {},
-        navigateToSetting = {}
+        navigateToSetting = {},
+        navigateToAlbumView = {}
     )
 }
