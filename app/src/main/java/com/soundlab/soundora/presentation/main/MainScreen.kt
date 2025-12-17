@@ -12,8 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.soundlab.soundora.domain.model.TopAlbum
+import com.soundlab.soundora.presentation.components.bottomsheet.MusicBottomSheet
+import com.soundlab.soundora.presentation.components.bottomsheet.MusicBottomSheetContent
 import com.soundlab.soundora.presentation.home.HomeScreen
 import com.soundlab.soundora.presentation.library.LibraryScreen
 import com.soundlab.soundora.presentation.main.components.NavBar
@@ -93,6 +96,12 @@ fun MainScreenContent(
             modifier = Modifier
                 .weight(1f)
         )
+
+        MusicBottomSheet(
+            modifier = Modifier
+                .padding(bottom = 80.dp)
+        )
+
         NavBar(
             onTabClick = { index ->
                 onTabClick(index)

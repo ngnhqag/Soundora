@@ -22,7 +22,7 @@ data class TrackDto(
     val preview: String,     // Link preview 30s
     @SerializedName("md5_image")
     val md5Image: String,    // Hash hình ảnh album
-    val artist: ArtistDto,      // Thông tin nghệ sĩ
-    val album: AlbumDto,        // Thông tin album
+    val artist: ArtistDto?,      // Thông tin nghệ sĩ
+    val album: AlbumDto?,        // Thông tin album
     val type: String         // Loại object, thường là "track"
 )

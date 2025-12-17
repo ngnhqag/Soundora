@@ -1,7 +1,6 @@
 package com.soundlab.soundora.presentation.albumview
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -45,6 +45,7 @@ import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.presentation.theme.SoundoraTypography
 import com.soundlab.soundora.util.ext.getDominantColor
 import org.koin.compose.viewmodel.koinViewModel
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun AlbumViewScreen(
@@ -57,11 +58,14 @@ fun AlbumViewScreen(
     var dominantColor by remember { mutableStateOf(SoundoraColors.BackGround.BackgroundPrimary) }
 
     LaunchedEffect(topAlbum) {
-        val topAlbum = topAlbum
         dominantColor = topAlbum.coverMedium.getDominantColor(
             context,
             SoundoraColors.BackGround.BackgroundPrimary
         )
+        viewModel.processIntent(AlbumViewIntent.LoadTracks(topAlbum.id))
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.event.collect { events ->
             when (events) {
                 AlbumViewEvent.NavigationToMain -> {
@@ -91,7 +95,7 @@ fun AlbumViewScreenContent(
     onBackClick: () -> Unit
 
 ) {
-
+    Log.d("AlbumViewScreen123", "$state")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -237,6 +241,65 @@ fun AlbumViewScreenContent(
                     modifier = Modifier
                         .size(56.dp)
                 )
+            }
+
+            // Track
+
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+                items(state.tracks.filterNotNull()) { track ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier
+                        ) {
+                            Text(
+                                text = track.title,
+                                color = SoundoraColors.Text.TextPrimary,
+                                style = SoundoraTypography.Title.Medium.Medium
+                            )
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(top = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_download),
+                                    contentDescription = null,
+                                    tint = SoundoraColors.Primary.Primary,
+                                    modifier = Modifier
+                                        .size(12.dp)
+                                )
+
+                                Text(
+                                    text = topAlbum.artistName,
+                                    color = SoundoraColors.Neutral.Neutral01,
+                                    style = SoundoraTypography.Body.Medium,
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Icon(
+                            painter = painterResource(R.drawable.ic_more),
+                            contentDescription = null,
+                            tint = SoundoraColors.Neutral.Neutral01,
+                            modifier = Modifier
+                                .padding(start = 32.dp)
+                                .size(20.dp)
+                        )
+                    }
+                }
             }
         }
     }

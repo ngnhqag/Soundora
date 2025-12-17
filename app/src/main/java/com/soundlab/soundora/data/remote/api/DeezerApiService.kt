@@ -27,4 +27,15 @@ interface DeezerApiService {
 
     @GET("chart/0/albums")
     suspend fun getTopAlbums(): TopAlbumResponseDto
+
+    @GET("album/{id}/tracks")
+    suspend fun getAlbumTracks(
+        @Path("id") albumId: Long
+    ): TrackResponseDto
+
+    @GET("artist/{id}/top")
+    suspend fun getArtistTopTracks(
+        @Path("id") artistId: Long,
+        @Query("limit") limit: Int = 10
+    ): TrackResponseDto
 }

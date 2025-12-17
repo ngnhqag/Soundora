@@ -1,6 +1,5 @@
 package com.soundlab.soundora.data.repository
 
-import android.util.Log
 import com.soundlab.soundora.data.mapper.toFirestore
 import com.soundlab.soundora.data.remote.datasource.UserRemoteDataSource
 import com.soundlab.soundora.domain.model.User
