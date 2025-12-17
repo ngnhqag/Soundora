@@ -11,17 +11,18 @@ class HomeViewModel(
 ) : BaseMviViewModel<HomeIntent, HomeState, HomeEvent>() {
 
     init {
-        getAlbumFromDeezer()
+        getTopAlbumFromDeezer()
     }
 
-    private fun getAlbumFromDeezer() {
+    private fun getTopAlbumFromDeezer() {
         viewModelScope.launch {
             val result = fetchTopAlbumUseCase()
             result.onSuccess { topAlbums ->
                 updateState { copy(topAlbums = topAlbums) }
             }
-            result.onFailure { it
-                Log.d("HomeVM", "$it")
+            result.onFailure {
+                it
+                Log.d("HomeVM getTopAlbumFromDeezer", "$it")
             }
         }
     }
@@ -36,8 +37,8 @@ class HomeViewModel(
                 handleOnSettingClick()
             }
 
-            HomeIntent.OnAlbumClick -> {
-
+            is HomeIntent.OnAlbumClick -> {
+                sendEvent(HomeEvent.NavigateToAlbumView(intent.topAlbum))
             }
         }
     }

@@ -5,6 +5,8 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.soundlab.soundora.domain.model.TopAlbum
+import com.soundlab.soundora.presentation.albumview.AlbumViewScreen
 import com.soundlab.soundora.presentation.login.LoginScreen
 import com.soundlab.soundora.presentation.main.MainScreen
 import com.soundlab.soundora.presentation.setting.SettingScreen
@@ -33,7 +35,10 @@ fun NavRoutes() {
                 MainScreen(
                     navigateToSetting = {
                         backStack.add(Destination.Setting)
-                    }
+                    },
+                    navigateToAlbumView = { topAlbum ->
+                        backStack.add(Destination.AlbumView(topAlbum))
+                    },
                 )
             }
 
@@ -53,6 +58,15 @@ fun NavRoutes() {
                     navigateToHome = {
                         backStack.removeLastOrNull()
                     },
+                )
+            }
+
+            entry<Destination.AlbumView> { dest ->
+                AlbumViewScreen(
+                    topAlbum = dest.topAlbum,
+                    navigateToMain = {
+                        backStack.removeLastOrNull()
+                    }
                 )
             }
         }

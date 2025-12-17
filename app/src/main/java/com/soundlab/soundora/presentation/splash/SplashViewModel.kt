@@ -17,7 +17,7 @@ class SplashViewModel(
         viewModelScope.launch {
             val firebase = FirebaseAuth.getInstance()
             val user = firebase.currentUser
-            delay(2000)
+            delay(1500)
             if (user != null) {
                 sendEvent(SplashEvent.NavigateToMain)
             } else {

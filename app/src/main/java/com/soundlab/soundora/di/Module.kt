@@ -13,16 +13,22 @@ import com.soundlab.soundora.data.provider.GoogleAuthenticProvider
 import com.soundlab.soundora.data.provider.GoogleAuthenticProviderImpl
 import com.soundlab.soundora.data.remote.api.DeezerApiClient
 import com.soundlab.soundora.data.remote.api.DeezerApiService
-import com.soundlab.soundora.data.remote.datasource.DeezerDataSource
-import com.soundlab.soundora.data.remote.datasource.DeezerDataSourceImpl
+import com.soundlab.soundora.data.remote.datasource.AlbumDataSource
+import com.soundlab.soundora.data.remote.datasource.AlbumDataSourceImpl
+import com.soundlab.soundora.data.remote.datasource.TrackDataSource
+import com.soundlab.soundora.data.remote.datasource.TrackDataSourceImpl
 import com.soundlab.soundora.data.remote.datasource.UserRemoteDataSource
 import com.soundlab.soundora.data.remote.datasource.UserRemoteDataSourceImpl
-import com.soundlab.soundora.data.repository.DeezerRepositoryImpl
+import com.soundlab.soundora.data.repository.AlbumRepositoryImpl
+import com.soundlab.soundora.data.repository.TrackRepositoryImpl
 import com.soundlab.soundora.data.repository.UserRepositoryImpl
-import com.soundlab.soundora.domain.repository.DeezerRepository
+import com.soundlab.soundora.domain.repository.AlbumRepository
+import com.soundlab.soundora.domain.repository.TrackRepository
 import com.soundlab.soundora.domain.repository.UserRepository
 import com.soundlab.soundora.domain.usecase.FetchTopAlbumUseCase
+import com.soundlab.soundora.domain.usecase.GetTracksByAlbumIdUseCase
 import com.soundlab.soundora.domain.usecase.SaveUserToFirestoreUseCase
+import com.soundlab.soundora.presentation.albumview.AlbumViewViewModel
 import com.soundlab.soundora.presentation.home.HomeViewModel
 import com.soundlab.soundora.presentation.library.LibraryViewModel
 import com.soundlab.soundora.presentation.login.LoginViewModel
@@ -42,6 +48,7 @@ val viewModelModule by lazy {
         viewModel { LibraryViewModel(get()) }
         viewModel { SplashViewModel() }
         viewModel { SettingViewModel(get(), get()) }
+        viewModel { AlbumViewViewModel(get(), get()) }
     }
 }
 
@@ -76,14 +83,16 @@ val localDataModule by lazy {
 val remoteDataModule by lazy {
     module {
         single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get()) }
-        single<DeezerDataSource> { DeezerDataSourceImpl(get()) }
+        single<AlbumDataSource> { AlbumDataSourceImpl(get()) }
+        single<TrackDataSource> { TrackDataSourceImpl(get()) }
     }
 }
 
 val repositoryModule by lazy {
     module {
         single<UserRepository> { UserRepositoryImpl(get()) }
-        single<DeezerRepository> { DeezerRepositoryImpl(get()) }
+        single<AlbumRepository> { AlbumRepositoryImpl(get()) }
+        single<TrackRepository> { TrackRepositoryImpl(get()) }
     }
 }
 
@@ -91,6 +100,7 @@ val useCaseModule by lazy {
     module {
         factory { SaveUserToFirestoreUseCase(get()) }
         factory { FetchTopAlbumUseCase(get()) }
+        factory { GetTracksByAlbumIdUseCase(get()) }
     }
 }
 

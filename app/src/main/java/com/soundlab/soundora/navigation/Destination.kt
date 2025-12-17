@@ -1,6 +1,7 @@
 package com.soundlab.soundora.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.soundlab.soundora.domain.model.TopAlbum
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,4 +14,6 @@ sealed interface Destination : NavKey {
     data object Splash : Destination
     @Serializable
     data object Setting : Destination
+    @Serializable
+    data class AlbumView(val topAlbum: TopAlbum) : Destination
 }
