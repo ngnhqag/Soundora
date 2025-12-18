@@ -16,7 +16,8 @@ class App : Application() {
                 remoteDataModule,
                 repositoryModule,
                 useCaseModule,
-                deezerModule
+                deezerModule,
+                playerModule
             )
         }
     }

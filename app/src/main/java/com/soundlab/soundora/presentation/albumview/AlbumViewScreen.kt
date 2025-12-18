@@ -2,6 +2,7 @@ package com.soundlab.soundora.presentation.albumview
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,11 +47,14 @@ import com.soundlab.soundora.presentation.theme.SoundoraTypography
 import com.soundlab.soundora.util.ext.getDominantColor
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.foundation.lazy.items
+import com.soundlab.soundora.presentation.player.PlayerIntent
+import com.soundlab.soundora.presentation.player.PlayerViewModel
 
 @Composable
 fun AlbumViewScreen(
     topAlbum: TopAlbum,
     viewModel: AlbumViewViewModel = koinViewModel(),
+    playerViewModel: PlayerViewModel = koinViewModel(),
     navigateToMain: () -> Unit
 ) {
     val context = LocalContext.current
@@ -71,7 +75,12 @@ fun AlbumViewScreen(
                 AlbumViewEvent.NavigationToMain -> {
                     navigateToMain()
                 }
+
+                is AlbumViewEvent.PlayTrack -> {
+                    playerViewModel.processIntent(PlayerIntent.Play(events.url))
+                }
             }
+
         }
     }
 
@@ -81,6 +90,9 @@ fun AlbumViewScreen(
         topAlbum = topAlbum,
         onBackClick = {
             viewModel.processIntent(AlbumViewIntent.OnBackClick)
+        },
+        onTrackClick = {
+            viewModel.processIntent(AlbumViewIntent.OnTrackClick(it))
         }
     )
     Log.d("AlbumViewScreen", "$topAlbum")
@@ -92,7 +104,8 @@ fun AlbumViewScreenContent(
     dominantColor: Color,
     state: AlbumViewState,
     topAlbum: TopAlbum,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onTrackClick: (url: String) -> Unit
 
 ) {
     Log.d("AlbumViewScreen123", "$state")
@@ -253,7 +266,11 @@ fun AlbumViewScreenContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 12.dp),
+                            .padding(horizontal = 12.dp, vertical = 12.dp)
+                            .clickable {
+                                onTrackClick(track.preview)
+                                Log.d("AlbumViewScreen", track.preview)
+                            },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(
@@ -329,6 +346,7 @@ private fun AlbumViewScreenPreview() {
             artistName = "Sample Artist",
             type = ""
         ),
-        onBackClick = {}
+        onBackClick = {},
+        onTrackClick = {}
     )
 }

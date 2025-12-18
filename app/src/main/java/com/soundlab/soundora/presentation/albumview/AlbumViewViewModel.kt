@@ -54,6 +54,10 @@ class AlbumViewViewModel(
             is AlbumViewIntent.LoadTracks -> {
                 loadTracks(intent.albumId)
             }
+
+            is AlbumViewIntent.OnTrackClick -> {
+                sendEvent(AlbumViewEvent.PlayTrack(intent.url))
+            }
         }
     }
 

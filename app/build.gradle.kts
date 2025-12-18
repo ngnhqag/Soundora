@@ -93,5 +93,8 @@ dependencies {
     ksp (libs.androidx.room.compiler)
     // Palette
     implementation(libs.androidx.palette)
+    // Media 3
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 
 }

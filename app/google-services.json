@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1015453616720-9lbtslfr21h7s2u8358d59sebon868j8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soundlab.soundora",
+            "certificate_hash": "a12e81216d88c9a2158182246a645d679e03cbec"
+          }
+        },
+        {
           "client_id": "1015453616720-9rnedla69vh7j2nv1vd20759urlq2n74.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
