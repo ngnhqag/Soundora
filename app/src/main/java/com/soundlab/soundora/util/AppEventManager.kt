@@ -1,13 +1,17 @@
 package com.soundlab.soundora.util
 
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+
 
 object AppEventManager {
-    private val _events = MutableSharedFlow<AppEvent>()
-    val events: SharedFlow<AppEvent> = _events
+
+    private val _events = Channel<AppEvent>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
 
     suspend fun sendEvent(event: AppEvent) {
-        _events.emit(event)
+        _events.send(event)
     }
 }
