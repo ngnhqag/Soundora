@@ -3,7 +3,6 @@ package com.soundlab.soundora.presentation.albumview
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.soundlab.soundora.base.BaseMviViewModel
-import com.soundlab.soundora.domain.model.TopAlbum
 import com.soundlab.soundora.domain.usecase.FetchTopAlbumUseCase
 import com.soundlab.soundora.domain.usecase.GetTracksByAlbumIdUseCase
 import kotlinx.coroutines.launch
@@ -56,7 +55,7 @@ class AlbumViewViewModel(
             }
 
             is AlbumViewIntent.OnTrackClick -> {
-                sendEvent(AlbumViewEvent.PlayTrack(intent.url))
+                sendEvent(AlbumViewEvent.PlayTrack(intent.track))
             }
         }
     }

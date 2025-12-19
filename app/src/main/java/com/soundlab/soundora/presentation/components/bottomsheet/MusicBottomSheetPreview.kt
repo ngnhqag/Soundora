@@ -1,14 +1,15 @@
 package com.soundlab.soundora.presentation.components.bottomsheet
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -18,25 +19,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.soundlab.soundora.presentation.theme.SoundoraColors
+import coil3.compose.rememberAsyncImagePainter
 import com.soundlab.soundora.R
+import com.soundlab.soundora.domain.model.Track
+import com.soundlab.soundora.presentation.theme.SoundoraColors
 import com.soundlab.soundora.presentation.theme.SoundoraShapes
+import com.soundlab.soundora.util.ext.getDeezerCoverUrl
 
 @Composable
 fun MusicBottomSheet(
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    track: Track,
+    isPaused: Boolean,
+    onStopClick: () -> Unit,
+    onPlayPauseClick: () -> Unit
 ) {
-    MusicBottomSheetContent()
+        MusicBottomSheetContent(
+            modifier, track, isPaused,
+            onStopClick = {
+                onStopClick()
+            },
+            onPlayPauseClick = {
+                onPlayPauseClick()
+            }
+    )
 }
 
 @Composable
-fun MusicBottomSheetContent() {
+fun MusicBottomSheetContent(
+    modifier: Modifier = Modifier,
+    track: Track,
+    isPaused: Boolean,
+    onStopClick: () -> Unit,
+    onPlayPauseClick: () -> Unit
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .background(color = SoundoraColors.BackGround.BackgroundPrimary)
             .padding(horizontal = 12.dp)
     ) {
@@ -46,7 +68,7 @@ fun MusicBottomSheetContent() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(R.drawable.img_album),
+                painter = rememberAsyncImagePainter(track.md5Image.getDeezerCoverUrl(40)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -55,7 +77,7 @@ fun MusicBottomSheetContent() {
             )
 
             Text(
-                text = stringResource(R.string.music).take(35),
+                text = track.title.take(35),
                 color = SoundoraColors.Text.TextPrimary,
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -63,21 +85,31 @@ fun MusicBottomSheetContent() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Icon(
-                painter = painterResource(R.drawable.ic_bluetooth),
-                contentDescription = null,
-                tint = SoundoraColors.Primary.Primary,
-                modifier = Modifier
-                    .size(24.dp)
-            )
+           IconButton(
+               onClick = {
+                   onStopClick()
+               }
+           ) {
+               Icon(
+                   painter = painterResource(R.drawable.ic_stop),
+                   contentDescription = null,
+                   tint = SoundoraColors.Primary.Primary,
+                   modifier = Modifier
+                       .size(24.dp)
+               )
+           }
 
             IconButton(
-                onClick = {},
+                onClick = {
+                    onPlayPauseClick()
+                }
             ) {
+                val iconPlayPause = if (isPaused) R.drawable.ic_play else R.drawable.ic_pause
+                Log.d("MusicBottomSheet", "isPaused: $isPaused")
                 Icon(
-                    painter = painterResource(R.drawable.ic_pause),
+                    painter = painterResource(iconPlayPause),
                     contentDescription = null,
-                    tint = SoundoraColors.White,
+                    tint = SoundoraColors.Primary.Primary,
                     modifier = Modifier
                         .size(24.dp)
                 )
@@ -89,5 +121,11 @@ fun MusicBottomSheetContent() {
 @Preview
 @Composable
 private fun MusicBottomSheetPreview() {
-   MusicBottomSheetContent()
+   MusicBottomSheetContent(
+       modifier = Modifier,
+       track = Track(),
+       isPaused = true,
+       onStopClick = { },
+       onPlayPauseClick = { }
+   )
 }

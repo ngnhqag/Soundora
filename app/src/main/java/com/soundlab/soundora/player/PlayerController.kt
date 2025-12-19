@@ -1,8 +1,10 @@
 package com.soundlab.soundora.player
 
+import com.soundlab.soundora.domain.model.Track
+
 
 interface PlayerController {
-    fun play(url: String)
+    fun play(track: Track)
     fun resume()
     fun pause()
     fun stop()

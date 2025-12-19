@@ -3,6 +3,7 @@ package com.soundlab.soundora.player
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.soundlab.soundora.domain.model.Track
 
 class PlayerControllerImpl(
     context: Context
@@ -10,8 +11,8 @@ class PlayerControllerImpl(
 
     private val exoPlayer = ExoPlayer.Builder(context).build()
 
-    override fun play(url: String) {
-        val mediaItem = MediaItem.fromUri(url)
+    override fun play(track: Track) {
+        val mediaItem = MediaItem.fromUri(track.preview)
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
         exoPlayer.play()

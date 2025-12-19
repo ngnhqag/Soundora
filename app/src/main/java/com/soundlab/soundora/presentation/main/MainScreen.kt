@@ -97,11 +97,6 @@ fun MainScreenContent(
                 .weight(1f)
         )
 
-        MusicBottomSheet(
-            modifier = Modifier
-                .padding(bottom = 80.dp)
-        )
-
         NavBar(
             onTabClick = { index ->
                 onTabClick(index)
