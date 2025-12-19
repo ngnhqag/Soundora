@@ -79,7 +79,7 @@ fun LibraryScreenContent(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://lh3.googleusercontent.com/a/ACg8ocIx_ka_Polh0R2wv9hCchZKIBUnuXituzqFtbQQVQhxoyI1hQ=s96-c")
+                    .data(state.user?.displayUrl)
                     .size(150).build()
                 ,
                 contentDescription = null,
