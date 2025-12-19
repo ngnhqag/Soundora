@@ -9,7 +9,7 @@ import com.soundlab.soundora.domain.model.Track
 sealed class AlbumViewIntent : MviIntent {
     data object OnBackClick : AlbumViewIntent()
     data class LoadTracks(val albumId: Long) : AlbumViewIntent()
-    data class OnTrackClick(val url: String) : AlbumViewIntent()
+    data class OnTrackClick(val track: Track) : AlbumViewIntent()
 }
 
 data class AlbumViewState(
@@ -20,5 +20,5 @@ data class AlbumViewState(
 
 sealed class AlbumViewEvent: MviSingleEvent {
     data object NavigationToMain: AlbumViewEvent()
-    data class PlayTrack(val url: String): AlbumViewEvent()
+    data class PlayTrack(val track: Track): AlbumViewEvent()
 }

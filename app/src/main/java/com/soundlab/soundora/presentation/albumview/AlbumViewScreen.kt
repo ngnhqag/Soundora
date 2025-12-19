@@ -47,6 +47,7 @@ import com.soundlab.soundora.presentation.theme.SoundoraTypography
 import com.soundlab.soundora.util.ext.getDominantColor
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.foundation.lazy.items
+import com.soundlab.soundora.domain.model.Track
 import com.soundlab.soundora.presentation.player.PlayerIntent
 import com.soundlab.soundora.presentation.player.PlayerViewModel
 
@@ -77,7 +78,7 @@ fun AlbumViewScreen(
                 }
 
                 is AlbumViewEvent.PlayTrack -> {
-                    playerViewModel.processIntent(PlayerIntent.Play(events.url))
+                    playerViewModel.processIntent(PlayerIntent.Play(events.track))
                 }
             }
 
@@ -105,7 +106,7 @@ fun AlbumViewScreenContent(
     state: AlbumViewState,
     topAlbum: TopAlbum,
     onBackClick: () -> Unit,
-    onTrackClick: (url: String) -> Unit
+    onTrackClick: (track: Track) -> Unit
 
 ) {
     Log.d("AlbumViewScreen123", "$state")
@@ -257,9 +258,9 @@ fun AlbumViewScreenContent(
             }
 
             // Track
-
             LazyColumn(
                 modifier = Modifier
+                    .padding( top = 12.dp, bottom = 132.dp)
                     .weight(1f)
             ) {
                 items(state.tracks.filterNotNull()) { track ->
@@ -268,7 +269,7 @@ fun AlbumViewScreenContent(
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 12.dp)
                             .clickable {
-                                onTrackClick(track.preview)
+                                onTrackClick(track)
                                 Log.d("AlbumViewScreen", track.preview)
                             },
                         verticalAlignment = Alignment.CenterVertically

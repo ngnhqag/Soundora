@@ -1,5 +1,6 @@
 package com.soundlab.soundora.presentation.player
 
+import android.util.Log
 import com.soundlab.soundora.base.BaseMviViewModel
 import com.soundlab.soundora.player.PlayerController
 
@@ -13,9 +14,9 @@ class PlayerViewModel(
     override fun processIntent(intent: PlayerIntent) {
         when (intent) {
             is PlayerIntent.Play -> {
-                playerController.play(intent.url)
+                playerController.play(intent.track)
                 updateState {
-                    copy(isPlaying = true, currentTrack = intent.url)
+                    copy(isPlaying = true, currentTrack = intent.track)
                 }
             }
             is PlayerIntent.Pause -> {
@@ -45,6 +46,20 @@ class PlayerViewModel(
                     copy(isPlaying = false)
                 }
                 sendEvent(PlayerEvent.TrackEnded)
+            }
+            is PlayerIntent.TogglePlayPause -> {
+                if (currentState.isPaused) {
+                    playerController.resume()
+                    updateState {
+                        copy(isPaused = false)
+                    }
+                }
+                else {
+                    playerController.pause()
+                    updateState {
+                        copy(isPaused = true)
+                    }
+                }
             }
         }
     }

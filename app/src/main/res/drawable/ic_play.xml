@@ -12,8 +12,8 @@
         android:pathData="M12,2
                           A10,10 0 1,1 11.999,2 Z"/>
 
-    <!-- Hai thanh Pause (ngắn hơn) -->
+    <!-- Tam giác Play -->
     <path
         android:fillColor="#000000"
-        android:pathData="M8,7 H10 V17 H8 Z M14,7 H16 V17 H14 Z"/>
+        android:pathData="M8,5 L8,19 L18,12 Z"/>
 </vector>
