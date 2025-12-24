@@ -5,13 +5,13 @@
     <string name="continue_with_facebook">Tiếp tục với Facebook</string>
     <string name="continue_with_apple">Tiếp tục với Apple</string>
     <string name="log_in">Đăng nhập</string>
-    <string name="login_title">Hàng triệu bài hát.\nMiễn phí trên Spotify.</string>
+    <string name="login_title">Hàng triệu bài hát.\nMiễn phí trên Soundora.</string>
     <string name="web_client_id">1015453616720-e6d1d503p51io607nn635d37eapsg51e.apps.googleusercontent.com</string>
     <string name="home">Trang chủ</string>
     <string name="search">Tìm kiếm</string>
     <string name="your_library">Thư viện của bạn</string>
     <string name="login_error">Lỗi đăng nhập</string>
-    <string name="recently_played">Nghe gần đây</string>
+    <string name="top_album">Bộ sưu tập nổi bật</string>
     <string name="settings">Cài đặt</string>
     <string name="languages">Ngôn ngữ</string>
     <string name="logout">Đăng xuất</string>
