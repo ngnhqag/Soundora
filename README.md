@@ -12,6 +12,14 @@
 9. Architecture: MVI + Clean Architecture
 10. Language: Vietnamese + English
 
+# Video Demo
+- [Xem video demo tại đây](https://drive.google.com/file/d/1WCx_c52sGikOOd8J22odEfA-PbQEbm4S/view)
+# APK
+- [Download APK tại đây](https://1drv.ms/u/c/b130afdc324f2f68/IQB8_ay3-alCT6_fAwTLbgc0AW5bcHHEEhLpQKsuhheliSU?e=aJnsIw)
+
+
+
+
 ## 🏗️ Architecture Overview
 
 ```
