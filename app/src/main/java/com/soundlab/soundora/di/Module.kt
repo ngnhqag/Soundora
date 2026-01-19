@@ -51,7 +51,7 @@ val viewModelModule by lazy {
         viewModel { SearchViewModel() }
         viewModel { LibraryViewModel(get()) }
         viewModel { SplashViewModel() }
-        viewModel { SettingViewModel(get(), get()) }
+        viewModel { SettingViewModel(get(), get(), get()) }
         viewModel { AlbumViewViewModel(get(), get()) }
         viewModel { PlayerViewModel(get()) }
     }
@@ -112,6 +112,7 @@ val deezerModule by lazy {
     }
 }
 
+@OptIn(androidx.media3.common.util.UnstableApi::class)
 val playerModule by lazy {
     module {
         single<PlayerController> { PlayerControllerImpl(context = androidContext()) }

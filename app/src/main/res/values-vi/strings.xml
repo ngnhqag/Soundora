@@ -11,7 +11,7 @@
     <string name="search">Tìm kiếm</string>
     <string name="your_library">Thư viện của bạn</string>
     <string name="login_error">Lỗi đăng nhập</string>
-    <string name="recently_played">Nghe gần đây</string>
+    <string name="top_album">Bộ sưu tập hàng đầu</string>
     <string name="settings">Cài đặt</string>
     <string name="languages">Ngôn ngữ</string>
     <string name="logout">Đăng xuất</string>

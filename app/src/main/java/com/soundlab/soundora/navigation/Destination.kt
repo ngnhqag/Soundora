@@ -16,4 +16,9 @@ sealed interface Destination : NavKey {
     data object Setting : Destination
     @Serializable
     data class AlbumView(val topAlbum: TopAlbum) : Destination
+    @Serializable
+    data object Playlist : Destination
+    @Serializable
+    data object Library : Destination
+
 }

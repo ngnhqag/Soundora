@@ -1,12 +1,21 @@
 package com.soundlab.soundora.presentation.player
 
 import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.soundlab.soundora.base.BaseMviViewModel
 import com.soundlab.soundora.player.PlayerController
+import kotlinx.coroutines.launch
 
 class PlayerViewModel(
     private val playerController: PlayerController
 ): BaseMviViewModel<PlayerIntent, PlayerState, PlayerEvent>() {
+
+    init {
+        viewModelScope.launch {
+            playerController.connect()
+        }
+    }
+
     override fun initState(): PlayerState {
         return PlayerState()
     }

@@ -82,7 +82,7 @@ fun HomeScreenContent(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(R.string.recently_played),
+                text = stringResource(R.string.top_album),
                 color = SoundoraColors.Text.TextPrimary,
                 style = SoundoraTypography.Title.Large.Bold,
                 modifier = Modifier

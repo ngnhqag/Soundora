@@ -23,7 +23,7 @@ class LoginViewModel(
 
     override fun processIntent(intent: LoginIntent) {
         when (intent) {
-            LoginIntent.OnFacebookClick -> {
+            is LoginIntent.OnFacebookClick -> {
 
             }
 
@@ -31,12 +31,11 @@ class LoginViewModel(
                 handleGoogleClick(intent.context)
             }
 
-            LoginIntent.OnSignUpClick -> {
+            is LoginIntent.OnSignUpClick -> {
 
             }
         }
     }
-
     private fun handleGoogleClick(context: Context) {
         viewModelScope.launch {
             updateState { copy(isLoading = true) }

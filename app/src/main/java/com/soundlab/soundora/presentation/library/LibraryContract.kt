@@ -7,7 +7,7 @@ import com.soundlab.soundora.domain.model.PlaylistView
 import com.soundlab.soundora.domain.model.User
 
 sealed class LibraryIntent : MviIntent {
-
+    object OnSeeAllPlaylistClick : LibraryIntent()
 }
 
 data class LibraryState(
@@ -20,5 +20,5 @@ data class LibraryState(
 ) : MviViewState
 
 sealed class LibraryEvent : MviSingleEvent {
-
+    object NavigateToPlaylist : LibraryEvent()
 }

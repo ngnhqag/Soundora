@@ -18,7 +18,7 @@ data class SettingState(
     val isLoading: Boolean = false,
     val user: User? = null,
     val isShowLanguageBottomSheet: Boolean = false,
-    val languageCodeSelected: String = "vi"
+    val languageCodeSelected: String = "en"
 ) : MviViewState
 
 sealed class SettingEvent : MviSingleEvent {

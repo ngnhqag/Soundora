@@ -18,6 +18,7 @@ import com.soundlab.soundora.presentation.login.LoginScreen
 import com.soundlab.soundora.presentation.main.MainScreen
 import com.soundlab.soundora.presentation.player.PlayerIntent
 import com.soundlab.soundora.presentation.player.PlayerViewModel
+import com.soundlab.soundora.presentation.playlist.PlaylistScreen
 import com.soundlab.soundora.presentation.setting.SettingScreen
 import com.soundlab.soundora.presentation.splash.SplashScreen
 import com.soundlab.soundora.util.ext.replaceLastWith
@@ -56,6 +57,9 @@ fun NavRoutes(
                         navigateToAlbumView = { topAlbum ->
                             backStack.add(Destination.AlbumView(topAlbum))
                         },
+                        navigateToPlaylist = {
+                            backStack.add(Destination.Playlist)
+                        }
                     )
                 }
 
@@ -85,6 +89,10 @@ fun NavRoutes(
                             backStack.removeLastOrNull()
                         }
                     )
+                }
+
+                entry<Destination.Playlist> {
+                    PlaylistScreen()
                 }
             }
         )

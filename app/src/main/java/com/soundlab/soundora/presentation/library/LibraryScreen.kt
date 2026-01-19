@@ -2,6 +2,7 @@ package com.soundlab.soundora.presentation.library
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,18 +49,34 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LibraryScreen(
-    viewModel: LibraryViewModel = koinViewModel()
+    viewModel: LibraryViewModel = koinViewModel(),
+    navigateToPlaylist : () -> Unit
 ) {
     val state = viewModel.viewState.collectAsStateWithLifecycle()
     Log.d("Library Screen", "${state.value.playlistView}")
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is LibraryEvent.NavigateToPlaylist -> {
+                    navigateToPlaylist()
+                }
+            }
+        }
+    }
+
     LibraryScreenContent(
         state = state.value,
+        onSeeAllPlaylistClick = {
+            viewModel.processIntent(LibraryIntent.OnSeeAllPlaylistClick)
+        }
     )
 }
 
 @Composable
 fun LibraryScreenContent(
-    state: LibraryState
+    state: LibraryState,
+    onSeeAllPlaylistClick : () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -233,6 +251,11 @@ fun LibraryScreenContent(
                 color = SoundoraColors.Text.TextPrimary,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 20.dp)
+                    .clickable(
+                        onClick = {
+                            onSeeAllPlaylistClick()
+                        }
+                    )
             )
         }
     }
@@ -242,6 +265,7 @@ fun LibraryScreenContent(
 @Composable
 private fun LibraryScreenPreview() {
     LibraryScreenContent(
-        state = LibraryState()
+        state = LibraryState(),
+        onSeeAllPlaylistClick = {},
     )
 }

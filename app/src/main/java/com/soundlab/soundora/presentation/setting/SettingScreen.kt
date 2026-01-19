@@ -147,8 +147,9 @@
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onProfileClick() }
                     .padding(top = 52.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable { onProfileClick() }
                     .padding(horizontal = 28.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

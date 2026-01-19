@@ -8,4 +8,5 @@ interface PlayerController {
     fun resume()
     fun pause()
     fun stop()
+    fun connect()
 }

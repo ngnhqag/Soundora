@@ -11,13 +11,16 @@ import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewModelScope
 import com.soundlab.soundora.base.BaseMviViewModel
 import com.soundlab.soundora.data.local.datastore.DataStoreManager
+import com.soundlab.soundora.data.provider.GoogleAuthenticProvider
 import com.soundlab.soundora.presentation.setting.model.SettingOption
+import com.soundlab.soundora.util.LanguageHelper
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class SettingViewModel(
     private val dataStoreManager: DataStoreManager,
-    private val context: Application
+    private val context: Application,
+    private val googleAuthenticProvider: GoogleAuthenticProvider
 ) : BaseMviViewModel<SettingIntent, SettingState, SettingEvent>() {
 
     init {
@@ -28,8 +31,11 @@ class SettingViewModel(
     private fun getLanguageCodeFromDataStore() {
         viewModelScope.launch {
             val languageCode = dataStoreManager.getLanguageCode().firstOrNull()
-            languageCode?.let {
-                updateState { copy(languageCodeSelected = it) }
+            if (languageCode != null) {
+                updateState { copy(languageCodeSelected = languageCode) }
+            } else {
+                val currentLanguageCode = LanguageHelper.getLanguageCode(context)
+                updateState { copy(languageCodeSelected = currentLanguageCode) }
             }
         }
     }
@@ -102,7 +108,7 @@ class SettingViewModel(
             }
 
             SettingOption.LOGOUT -> {
-
+//                googleAuthenticProvider.signOut()
             }
 
             SettingOption.DELETE_ACCOUNT -> {

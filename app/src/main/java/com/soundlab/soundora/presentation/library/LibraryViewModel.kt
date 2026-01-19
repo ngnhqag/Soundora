@@ -42,6 +42,10 @@ class LibraryViewModel(
     }
 
     override fun processIntent(intent: LibraryIntent) {
-
+        when (intent) {
+            is LibraryIntent.OnSeeAllPlaylistClick -> {
+                sendEvent(LibraryEvent.NavigateToPlaylist)
+            }
+        }
     }
 }
