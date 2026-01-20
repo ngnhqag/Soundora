@@ -1,6 +1,5 @@
 package com.soundlab.soundora.presentation.setting
 
-import android.app.Activity
 import android.app.Application
 import android.app.LocaleManager
 import android.content.Intent
@@ -80,20 +79,23 @@ class SettingViewModel(
     }
 
     private fun handleOnSaveLanguage(languageCode: String) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(languageCode)
-        } else {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
-        }
+        viewModelScope.launch {
 
-        val intent = context.packageManager
-            .getLaunchIntentForPackage(context.packageName)
-            ?.apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            dataStoreManager.saveLanguageCode(languageCode)
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(languageCode)
+            } else {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageCode))
             }
-        context.startActivity(intent)
-        if (context is Activity) {
-            context.finish()
+
+            // Restart app
+            val intent = context.packageManager
+                .getLaunchIntentForPackage(context.packageName)
+                ?.apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            context.startActivity(intent)
         }
     }
 

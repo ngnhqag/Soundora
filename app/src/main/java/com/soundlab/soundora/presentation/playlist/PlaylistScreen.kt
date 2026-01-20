@@ -2,6 +2,7 @@ package com.soundlab.soundora.presentation.playlist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,20 +23,51 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.soundlab.soundora.R
+import com.soundlab.soundora.presentation.playlist.components.CreatePlaylistBottomSheetScreen
 import com.soundlab.soundora.presentation.theme.SoundoraColors
-import com.soundlab.soundora.presentation.theme.SoundoraShapes
 import com.soundlab.soundora.presentation.theme.SoundoraTypography
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun PlaylistScreen() {
-    PlaylistContent()
-}
+    fun PlaylistScreen(
+        viewModel: PlaylistViewModel = koinViewModel()
+    ) {
+        val state = viewModel.viewState.collectAsStateWithLifecycle()
+        LaunchedEffect(Unit) {
+            viewModel.event.collect { event ->
 
-@Composable
-fun PlaylistContent() {
+            }
+        }
+
+        Box {
+
+            if (state.value.showCreatePlaylistBottomSheet) {
+                CreatePlaylistBottomSheetScreen(
+                    onDismiss = {
+                        viewModel.processIntent(PlaylistIntent.OnDismissBottomSheet)
+                    },
+                    onCreateClick = { playlistName ->
+                        viewModel.processIntent(PlaylistIntent.OnConfirmCreatePlaylist(playlistName))
+                    }
+                )
+            }
+
+            PlaylistContent(
+                onCreateNewPlaylistClick = {
+                    viewModel.processIntent(PlaylistIntent.OnCreateNewPlaylistClick)
+                }
+            )
+        }
+    }
+
+    @Composable
+    fun PlaylistContent(
+        onCreateNewPlaylistClick : () -> Unit,
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +106,9 @@ fun PlaylistContent() {
                 .fillMaxWidth()
                 .padding(start = 12.dp)
                 .clickable(
-                    onClick = {}
+                    onClick = {
+                        onCreateNewPlaylistClick()
+                    }
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -104,5 +139,7 @@ fun PlaylistContent() {
 @Preview
 @Composable
 private fun PlaylistPreview() {
-    PlaylistContent()
+    PlaylistContent(
+        onCreateNewPlaylistClick = {}
+    )
 }

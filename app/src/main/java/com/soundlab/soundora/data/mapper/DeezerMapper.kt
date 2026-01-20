@@ -1,9 +1,9 @@
 package com.soundlab.soundora.data.mapper
 
-import com.soundlab.soundora.data.remote.model.AlbumDto
-import com.soundlab.soundora.data.remote.model.ArtistDto
-import com.soundlab.soundora.data.remote.model.TopAlbumDto
-import com.soundlab.soundora.data.remote.model.TrackDto
+import com.soundlab.soundora.data.remote.model.dto.AlbumDto
+import com.soundlab.soundora.data.remote.model.dto.ArtistDto
+import com.soundlab.soundora.data.remote.model.dto.TopAlbumDto
+import com.soundlab.soundora.data.remote.model.dto.TrackDto
 import com.soundlab.soundora.domain.model.Album
 import com.soundlab.soundora.domain.model.Artist
 import com.soundlab.soundora.domain.model.TopAlbum
