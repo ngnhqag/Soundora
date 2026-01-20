@@ -1,7 +1,7 @@
 package com.soundlab.soundora.data.remote.datasource
 
 import com.soundlab.soundora.data.remote.api.DeezerApiService
-import com.soundlab.soundora.data.remote.model.TopAlbumDto
+import com.soundlab.soundora.data.remote.model.dto.TopAlbumDto
 
 class AlbumDataSourceImpl(
     private val api: DeezerApiService

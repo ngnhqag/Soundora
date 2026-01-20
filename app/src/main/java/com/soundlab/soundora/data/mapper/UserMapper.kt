@@ -1,6 +1,6 @@
 package com.soundlab.soundora.data.mapper
 
-import com.soundlab.soundora.data.remote.model.UserFirestore
+import com.soundlab.soundora.data.remote.model.firestore.UserFirestore
 import com.soundlab.soundora.domain.model.User
 
 fun User.toFirestore(): UserFirestore {

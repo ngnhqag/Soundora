@@ -1,4 +1,4 @@
-package com.soundlab.soundora.data.remote.model
+package com.soundlab.soundora.data.remote.model.dto
 
 import com.google.gson.annotations.SerializedName
 

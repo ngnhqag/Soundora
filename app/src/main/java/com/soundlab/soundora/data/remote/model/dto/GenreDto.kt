@@ -1,4 +1,4 @@
-package com.soundlab.soundora.data.remote.model
+package com.soundlab.soundora.data.remote.model.dto
 
 data class GenreDto(
     val id: Long,         // ID thể loại

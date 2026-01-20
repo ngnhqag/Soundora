@@ -1,9 +1,9 @@
 package com.soundlab.soundora.data.remote.api
 
-import com.soundlab.soundora.data.remote.model.AlbumDto
-import com.soundlab.soundora.data.remote.model.ArtistDto
-import com.soundlab.soundora.data.remote.model.TopAlbumResponseDto
-import com.soundlab.soundora.data.remote.model.TrackResponseDto
+import com.soundlab.soundora.data.remote.model.dto.AlbumDto
+import com.soundlab.soundora.data.remote.model.dto.ArtistDto
+import com.soundlab.soundora.data.remote.model.dto.TopAlbumResponseDto
+import com.soundlab.soundora.data.remote.model.dto.TrackResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

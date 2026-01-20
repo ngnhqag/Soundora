@@ -1,4 +1,4 @@
-package com.soundlab.soundora.data.remote.model
+package com.soundlab.soundora.data.remote.model.firestore
 
 data class UserFirestore(
     val uid: String,
